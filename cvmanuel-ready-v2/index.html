@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Manuel García Sandoval — Creative Designer & Full-Stack Web Developer." />
+  <title>Manuel García Sandoval — CV</title>
+
+  <style>
+    :root {
+      --bg: #f4f4f2;
+      --fg: #111111;
+      --muted: #666666;
+      --line: #cfcfcb;
+      --soft: #e9e9e5;
+      --mono: "SFMono-Regular", "Roboto Mono", "Courier New", monospace;
+      --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --max: 1500px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(calc(100% - 48px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 48px), var(--max));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+      color: white;
+      pointer-events: none;
+    }
+
+    .topbar a, .topbar button { pointer-events: auto; }
+    .mono {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+
+    .language-switch {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 10px;
+      letter-spacing: .05em;
+    }
+
+    .lang {
+      opacity: .4;
+      transition: opacity .25s ease;
+    }
+
+    .lang.active {
+      opacity: 1;
+    }
+
+    .lang-separator {
+      opacity: .3;
+    }
+
+    .nav {
+      display: flex;
+      gap: 22px;
+    }
+
+    .nav a, .nav button {
+      position: relative;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .nav a::after, .nav button::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .3s ease;
+    }
+
+    .nav a:hover::after, .nav button:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 7vw;
+      align-items: end;
+      padding: 100px 0 54px;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(4.2rem, 10.5vw, 11.5rem);
+      line-height: .82;
+      letter-spacing: -.075em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .hero-title span { display: block; }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 55px;
+      max-width: 800px;
+    }
+
+    .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 9px;
+    }
+
+    .hero-meta p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .portrait-wrap {
+      align-self: center;
+      padding-top: 35px;
+    }
+
+    .portrait {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(100%);
+    }
+
+    .portrait-caption {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 9px;
+      border-top: 1px solid var(--fg);
+      margin-top: 9px;
+    }
+
+    section {
+      padding: 150px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 30px;
+      margin-bottom: 70px;
+    }
+
+    .section-number {
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .section-title {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(2.4rem, 5vw, 6rem);
+      line-height: .95;
+      letter-spacing: -.055em;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .intro-copy {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 30px;
+    }
+
+    .intro-copy p {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 3.1rem);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+
+    .experience-tools {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .toggle {
+      border-bottom: 1px solid var(--fg);
+      padding-bottom: 4px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .toggle.active { opacity: 1; }
+    .toggle:not(.active) { opacity: .4; }
+
+    .job {
+      display: grid;
+      grid-template-columns: 120px minmax(250px, 1fr) 1.6fr;
+      gap: 30px;
+      padding: 27px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .job:last-child { border-bottom: 1px solid var(--line); }
+
+    .job-date {
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .job-company {
+      font-size: clamp(1.35rem, 2.2vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .job-role {
+      margin-top: 7px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .job-details {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .job-details ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .job-details li {
+      margin-bottom: 9px;
+    }
+
+    .job-details li::before {
+      content: "— ";
+    }
+
+    .simple .job-details li:not(:first-child) { display: none; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+    }
+
+    .capability {
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.6rem, 3vw, 3.5rem);
+      line-height: .95;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .capability:last-child,
+    .grid-2 > .capability:nth-last-child(2) {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info-block {
+      padding: 25px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .info-block:last-child { border-bottom: 1px solid var(--line); }
+
+    .info-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .info-main {
+      font-size: 19px;
+      letter-spacing: -.02em;
+    }
+
+    .info-sub {
+      margin-top: 5px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-title {
+      margin: 0;
+      font-size: clamp(4rem, 11vw, 12rem);
+      line-height: .78;
+      letter-spacing: -.08em;
+      text-transform: uppercase;
+    }
+
+    .contact-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      border-top: 1px solid var(--fg);
+      border-bottom: 1px solid var(--fg);
+    }
+
+    .contact-link {
+      padding: 18px 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .contact-link:hover { opacity: .5; }
+
+    footer {
+      padding: 22px 0 30px;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Print / PDF version */
+    @media print {
+      @page {
+        size: A4;
+        margin: 14mm 15mm;
+      }
+
+      html, body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 10pt;
+      }
+
+      .topbar, .portrait-wrap, .experience-tools, .contact, footer,
+      .web-only, .nav { display: none !important; }
+
+      .page { width: 100%; }
+
+      .hero {
+        min-height: 0;
+        display: block;
+        padding: 0 0 18mm;
+      }
+
+      .hero-title {
+        font-size: 52pt;
+        line-height: .84;
+      }
+
+      .hero-meta {
+        margin-top: 12mm;
+        gap: 15mm;
+      }
+
+      section {
+        padding: 10mm 0;
+        border-top: .5pt solid #aaa;
+        break-inside: avoid;
+      }
+
+      .section-head {
+        grid-template-columns: 25mm 1fr;
+        gap: 7mm;
+        margin-bottom: 7mm;
+      }
+
+      .section-title {
+        font-size: 22pt;
+      }
+
+      .intro-copy {
+        grid-template-columns: 25mm 1fr;
+        gap: 7mm;
+      }
+
+      .intro-copy p {
+        font-size: 14pt;
+        line-height: 1.12;
+      }
+
+      .job {
+        grid-template-columns: 25mm 48mm 1fr;
+        gap: 7mm;
+        padding: 5mm 0;
+        break-inside: avoid;
+      }
+
+      .job-company { font-size: 14pt; }
+      .job-details { font-size: 8.5pt; }
+      .job-details li { margin-bottom: 3px; }
+
+      .grid-2 { gap: 0 15mm; }
+      .capability { font-size: 15pt; padding: 4mm 0; }
+
+      .info-block {
+        padding: 4mm 0;
+        break-inside: avoid;
+      }
+
+      .info-main { font-size: 10pt; }
+      .info-sub { font-size: 8.5pt; }
+    }
+
+    @media (max-width: 800px) {
+      .page, .topbar { width: min(calc(100% - 28px), var(--max)); }
+
+      .topbar {
+        top: 13px;
+      }
+
+      .topbar .nav a:nth-child(3) { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding-top: 100px;
+      }
+
+      .portrait-wrap {
+        width: min(100%, 330px);
+        justify-self: end;
+        padding-top: 0;
+      }
+
+      .hero-title { font-size: clamp(3.8rem, 18vw, 7rem); }
+
+      .hero-meta {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-top: 38px;
+      }
+
+      section { padding: 95px 0; }
+
+      .section-head, .intro-copy {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-bottom: 45px;
+      }
+
+      .job {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .job-details { margin-top: 4px; }
+
+      .grid-2 { grid-template-columns: 1fr; }
+
+      .capability:last-child,
+      .grid-2 > .capability:nth-last-child(2) {
+        border-bottom: 0;
+      }
+
+      .grid-2 > .capability:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .contact-links {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contact-title { font-size: clamp(4rem, 19vw, 8rem); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <a href="#top" class="mono">MGS / CV</a>
+    <button class="language-switch mono" id="language-switch" aria-label="Change language">
+      <span class="lang active" data-lang="en">EN</span><span class="lang-separator"> / </span><span class="lang" data-lang="es">ES</span>
+    </button>
+    <nav class="nav">
+      <a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a>
+      <a href="#capabilities" data-en="Capabilities" data-es="Especialidades">Capabilities</a>
+      <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
+      <button onclick="window.print()" data-en="Save PDF" data-es="Guardar PDF">Save PDF</button>
+    </nav>
+  </header>
+
+  <main id="top" class="page">
+    <section class="hero" style="border-top:0;">
+      <div>
+        <h1 class="hero-title">
+          <span>Manuel</span>
+          <span>García</span>
+          <span>Sandoval</span>
+        </h1>
+
+        <div class="hero-meta">
+          <div>
+            <div class="label" data-en="01 — Role" data-es="01 — Rol">01 — Role</div>
+            <p data-en="Creative Designer &amp; Full-Stack Web Developer" data-es="Diseñador Creativo y Desarrollador Web Full-Stack">Creative Designer &amp; Full-Stack Web Developer</p>
+          </div>
+          <div>
+            <div class="label" data-en="02 — Focus" data-es="02 — Enfoque">02 — Focus</div>
+            <p data-en="Branding / UI/UX / Web / AI-Driven Digital Experiences" data-es="Branding / UI/UX / Web / Experiencias Digitales impulsadas por IA">Branding / UI/UX / Web / AI-Driven Digital Experiences</p>
+          </div>
+          <div>
+            <div class="label" data-en="03 — Location" data-es="03 — Ubicación">03 — Location</div>
+            <p data-en="Caracas, Venezuela / Remote" data-es="Caracas, Venezuela / Remoto">Caracas, Venezuela / Remote</p>
+          </div>
+          <div>
+            <div class="label" data-en="04 — Contact" data-es="04 — Contacto">04 — Contact</div>
+            <p><a href="mailto:manugarcia50@gmail.com">manugarcia50@gmail.com</a><br><a href="https://wa.me/584226254574" target="_blank" rel="noopener">+58 422 625 4574 ↗</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="portrait-wrap">
+        <img class="portrait" src="assets/Manu%20solo%20BW.png" alt="Manuel García Sandoval" />
+        <div class="portrait-caption mono">
+          <span data-en="Creative / Developer" data-es="Creativo / Desarrollador">Creative / Developer</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-number">01</div>
+        <h2 class="section-title" data-en="Design, technology &amp; ideas." data-es="Diseño, tecnología e ideas.">Design, technology &amp; ideas.</h2>
+      </div>
+
+      <div class="intro-copy">
+        <div class="label" data-en="Profile" data-es="Perfil">Profile</div>
+        <p>
+          Creative Designer, Art Director and Web Developer with more than 7 years of experience creating brand identities, digital interfaces and web applications. I combine strategic design, modern web development and AI-assisted workflows to build efficient, scalable digital experiences.
+        </p>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head">
+        <div class="section-number">02</div>
+        <h2 class="section-title" data-en="Experience" data-es="Experiencia">Experience</h2>
+      </div>
+
+      <div class="experience-tools">
+        <button class="toggle active" data-mode="simple" data-en="Simple" data-es="Simple">Simple</button>
+        <button class="toggle" data-mode="detailed" data-en="Detailed" data-es="Detallado">Detailed</button>
+      </div>
+
+      <div id="experience-list" class="simple">
+        <article class="job">
+          <div class="job-date">Feb 2026 — Present</div>
+          <div>
+            <div class="job-company">Freelance</div>
+            <div class="job-role">Web Developer &amp; Creative Designer</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.</li>
+              <li>Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API.</li>
+              <li>Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch.</li>
+              <li>Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability.</li>
+              <li>Conceptualized the Batazo relaunch for Helados EFE, including art direction, campaign assets, storyboards and an interactive HTML5 Canvas baseball card generator.</li>
+              <li>Created content strategies, video scripts and social media assets for medical and retail clients.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">Dec 2024 — Aug 2026</div>
+          <div>
+            <div class="job-company">Bom Creative Studios</div>
+            <div class="job-role">Creative Designer</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences.</li>
+              <li>Led visual direction and production of digital pieces using AI-assisted workflows.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">Nov 2019 — Oct 2024</div>
+          <div>
+            <div class="job-company">3 Agencia Creativa</div>
+            <div class="job-role">Senior Graphic Designer &amp; Team Lead</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Led the agency design team and developed visual identities and websites for national and international brands.</li>
+              <li>Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company.</li>
+              <li>Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">Mar 2018 — Sep 2019</div>
+          <div>
+            <div class="job-company">YM Produce y Comunica</div>
+            <div class="job-role">Graphic Designer</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Graphic design and visual communication work.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">Feb 2018 — Mar 2018</div>
+          <div>
+            <div class="job-company">Langroo</div>
+            <div class="job-role">Graphic Designer</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Graphic design work for a Madrid-based company, remotely.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">May 2017 — Jan 2018</div>
+          <div>
+            <div class="job-company">Kromáticos Design</div>
+            <div class="job-role">Graphic Designer</div>
+          </div>
+          <div class="job-details">
+            <ul>
+              <li>Graphic design and visual communication work.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="section-head">
+        <div class="section-number">03</div>
+        <h2 class="section-title" data-en="Capabilities" data-es="Especialidades">Capabilities</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="capability">Art Direction</div>
+        <div class="capability">Branding</div>
+        <div class="capability">Web Development</div>
+        <div class="capability">UI / UX</div>
+        <div class="capability">AI &amp; Automation</div>
+        <div class="capability">Motion / Video</div>
+        <div class="capability">Social Media</div>
+        <div class="capability">Digital Experiences</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-number">04</div>
+        <h2 class="section-title" data-en="Tools &amp; knowledge" data-es="Herramientas y conocimientos">Tools &amp; knowledge</h2>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="info-block">
+            <div class="info-title">Web / Programming</div>
+            <div class="info-main">Next.js, React, Tailwind CSS, Zustand, Supabase, PostgreSQL, HTML5 Canvas, PHP, JavaScript, CSS, WordPress</div>
+            <div class="info-sub">Elementor / Custom Plugins</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">AI / Automation</div>
+            <div class="info-main">AI-Assisted Development, VS Code + Cline, Google AI Studio APIs, AI-Powered Workflows</div>
+          </div>
+        </div>
+        <div>
+          <div class="info-block">
+            <div class="info-title">Design / Multimedia</div>
+            <div class="info-main">UI/UX Design, Information Architecture, Motion &amp; Video Editing</div>
+            <div class="info-sub">DaVinci Resolve / Premiere Pro / Social Media Strategy</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">Languages</div>
+            <div class="info-main">Spanish — Native</div>
+            <div class="info-sub">English — Fluent / Advanced Professional (C1–B2 / Professional Working Proficiency)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-number">05</div>
+        <h2 class="section-title" data-en="Education &amp; certifications" data-es="Educación y certificaciones">Education &amp; certifications</h2>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="info-block">
+            <div class="info-title">Education</div>
+            <div class="info-main">Universidad Monteávila</div>
+            <div class="info-sub">Comunicación Social / 2015 — 2018</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">Secondary Education</div>
+            <div class="info-main">Colegio Don Bosco Altamira</div>
+            <div class="info-sub">Bachiller en Ciencias / 2004 — 2015</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="info-block">
+            <div class="info-title">Certifications</div>
+            <div class="info-main">Maratón de Excel — SmartPro Academy</div>
+            <div class="info-sub">2026</div>
+          </div>
+          <div class="info-block">
+            <div class="info-main">Branding en 3 tiempos — Domestika</div>
+            <div class="info-sub">2024</div>
+          </div>
+          <div class="info-block">
+            <div class="info-main">Masterclass: Composición Creativa — Banana Creative</div>
+            <div class="info-sub">2023</div>
+          </div>
+          <div class="info-block">
+            <div class="info-main">Adobe Premiere Pro Course — Arts Institute</div>
+            <div class="info-sub">2019</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div>
+        <div class="section-number" data-en="06 — Contact" data-es="06 — Contacto">06 — Contact</div>
+        <h2 class="contact-title">Let's<br>work.</h2>
+      </div>
+
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:manugarcia50@gmail.com" data-en="Mail ↗" data-es="Correo ↗">Mail ↗</a>
+        <a class="contact-link" href="https://wa.me/584226254574" target="_blank" rel="noopener">WhatsApp ↗</a>
+        <a class="contact-link" href="https://www.linkedin.com/in/manuuelgs/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <button class="contact-link" onclick="window.print()" data-en="Save PDF ↗" data-es="Guardar PDF ↗">Save PDF ↗</button>
+      </div>
+    </section>
+
+    <footer>
+      <span>Manuel García Sandoval</span>
+      <span data-en="Creative Designer / Developer / 2026" data-es="Diseñador Creativo / Desarrollador / 2026">Creative Designer / Developer / 2026</span>
+    </footer>
+  </main>
+
+  <script>
+
+    const translations = {
+      es: {
+        "Design, technology & ideas.": "Diseño, tecnología e ideas.",
+        "Creative Designer & Full-Stack Web Developer": "Diseñador Creativo y Desarrollador Web Full-Stack",
+        "Branding / UI/UX / Web / AI-Driven Digital Experiences": "Branding / UI/UX / Web / Experiencias Digitales impulsadas por IA",
+        "Caracas, Venezuela / Remote": "Caracas, Venezuela / Remoto",
+        "Creative / Developer": "Creativo / Desarrollador",
+        "Profile": "Perfil",
+        "Experience": "Experiencia",
+        "Capabilities": "Especialidades",
+        "Tools & knowledge": "Herramientas y conocimientos",
+        "Education & certifications": "Educación y certificaciones",
+        "Contact": "Contacto",
+        "Simple": "Simple",
+        "Detailed": "Detallado",
+        "Art Direction": "Dirección de Arte",
+        "Branding": "Branding",
+        "Web Development": "Desarrollo Web",
+        "AI & Automation": "IA y Automatización",
+        "Motion / Video": "Motion / Video",
+        "Social Media": "Redes Sociales",
+        "Digital Experiences": "Experiencias Digitales",
+        "Web / Programming": "Web / Programación",
+        "AI / Automation": "IA / Automatización",
+        "Design / Multimedia": "Diseño / Multimedia",
+        "Languages": "Idiomas",
+        "Spanish — Native": "Español — Nativo",
+        "English — Fluent / Advanced Professional (C1–B2 / Professional Working Proficiency)": "Inglés — Fluido / Profesional Avanzado (C1–B2 / Professional Working Proficiency)",
+        "Education": "Educación",
+        "Secondary Education": "Educación Secundaria",
+        "Certifications": "Certificaciones",
+        "Mail ↗": "Correo ↗",
+        "Save PDF ↗": "Guardar PDF ↗",
+        "Let's": "Hagamos",
+        "work.": "algo."
+      }
+    };
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-lang]").forEach(el => {
+        el.classList.toggle("active", el.dataset.lang === lang);
+      });
+
+      document.querySelectorAll("[data-en][data-es]").forEach(el => {
+        el.innerHTML = lang === "es" ? el.dataset.es : el.dataset.en;
+      });
+
+      if (lang === "es") {
+        document.querySelectorAll("h2, .capability, .info-title, .info-main, .info-sub, .job-role, .job-details li, .job-company, .label").forEach(el => {
+          if (!el.dataset.originalText) el.dataset.originalText = el.textContent;
+          const value = translations.es[el.dataset.originalText.trim()];
+          if (value) el.textContent = value;
+        });
+        document.querySelectorAll(".job-details li").forEach(el => {
+          const t = el.textContent.trim();
+          const map = {
+            "Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.": "Diseño creativo y desarrollo web moderno combinando branding, Next.js, flujos de trabajo asistidos por IA y experiencias digitales.",
+            "Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.": "Diseño creativo y desarrollo web moderno combinando branding, Next.js, flujos de trabajo asistidos por IA y experiencias digitales.",
+            "Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API.": "Desarrollo de Copymaster, una aplicación SaaS B2B para generación de copys utilizando Next.js, Supabase (RLS) y la API de Google AI Studio.",
+            "Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch.": "Desarrollo de un MVP de menús digitales multi-tenant con enrutamiento dinámico, carrito de compras y despacho de pedidos vía WhatsApp.",
+            "Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability.": "Desarrollo de plugins PHP personalizados y widgets de Elementor para optimización y escalabilidad de WordPress.",
+            "Conceptualized the Batazo relaunch for Helados EFE, including art direction, campaign assets, storyboards and an interactive HTML5 Canvas baseball card generator.": "Conceptualización del relanzamiento de Batazo para Helados EFE, incluyendo dirección de arte, assets de campaña, storyboards y un generador interactivo de tarjetas de béisbol en HTML5 Canvas.",
+            "Created content strategies, video scripts and social media assets for medical and retail clients.": "Creación de estrategias de contenido, guiones de video y piezas para redes sociales para clientes de los sectores médico y retail.",
+            "Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences.": "Diseño y desarrollo de soluciones visuales estratégicas integrando identidad de marca, campañas digitales y experiencias web.",
+            "Led visual direction and production of digital pieces using AI-assisted workflows.": "Dirección visual y producción de piezas digitales utilizando flujos de trabajo asistidos por IA.",
+            "Led the agency design team and developed visual identities and websites for national and international brands.": "Dirección del equipo de diseño de la agencia y desarrollo de identidades visuales y sitios web para marcas nacionales e internacionales.",
+            "Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company.": "Trabajo con marcas como Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno y Caracas Meat Company.",
+            "Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising.": "Creación de piezas para marcas de consumo masivo como Polar y Diageo, además de edición de video y publicidad exterior.",
+            "Graphic design and visual communication work.": "Trabajo de diseño gráfico y comunicación visual.",
+            "Graphic design work for a Madrid-based company, remotely.": "Trabajo de diseño gráfico para una empresa con sede en Madrid, de forma remota."
+          };
+          if (map[t]) el.textContent = map[t];
+        });
+      } else {
+        location.reload();
+      }
+    }
+
+    document.getElementById("language-switch").addEventListener("click", () => {
+      const next = document.documentElement.lang === "en" ? "es" : "en";
+      setLanguage(next);
+    });
+
+    const list = document.getElementById("experience-list");
+    const toggles = document.querySelectorAll(".toggle");
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener("click", () => {
+        toggles.forEach(t => t.classList.remove("active"));
+        toggle.classList.add("active");
+        list.classList.toggle("simple", toggle.dataset.mode === "simple");
+      });
+    });
+  </script>
+</body>
+</html>
