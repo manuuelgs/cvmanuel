@@ -512,13 +512,20 @@
     }
 
     @media (max-width: 800px) {
+
+      .topbar {
+        top: 13px;
+      }
+
+      /* NUEVO: Oculta "MGS / CV" en móvil */
+      .topbar a[href="#top"] {
+        display: none;
+      }
       /* ... (otras reglas) ... */
 
       .language-switch {
-        left: 0;           /* Lo alinea a la izquierda como el título */
-        top: 22px;         /* Lo empuja hacia abajo, debajo de MGS / CV */
-        transform: none;   /* Anula el centrado de la versión de escritorio */
-      
+        position: static; 
+        transform: none;
       }
 
       .topbar .nav {
