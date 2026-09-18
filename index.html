@@ -516,15 +516,21 @@
 
       .topbar {
         top: 13px;
+        align-items: flex-start; /* Evita que el menú baje al empujar el switch */
       }
 
       .language-switch {
-        left: 38%;
+        position: relative; /* Devuelve el switch al flujo normal */
+        left: 0;
+        transform: none;
+        margin-top: 4px; /* Pequeña separación del título */
       }
 
       .topbar .nav {
         gap: 14px;
       }
+      
+      /* ... El resto de tus reglas móviles quedan igual ... */
 
       .topbar .nav a:nth-child(3) { display: none; }
 
