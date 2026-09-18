@@ -52,8 +52,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      mix-blend-mode: difference;
-      color: white;
+      color: var(--fg);
       pointer-events: none;
     }
 
@@ -77,11 +76,15 @@
 
     .lang {
       opacity: .4;
-      transition: opacity .25s ease;
+      transition: all .2s ease;
+      padding: 5px 7px;
+      display: inline-block;
     }
 
     .lang.active {
       opacity: 1;
+      background: var(--fg);
+      color: var(--bg);
     }
 
     .lang-separator {
@@ -122,15 +125,15 @@
     .hero {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 7vw;
-      align-items: end;
-      padding: 100px 0 54px;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 0.58fr);
+      gap: clamp(40px, 6vw, 100px);
+      align-items: center;
+      padding: 115px 0 70px;
     }
 
     .hero-title {
       margin: 0;
-      font-size: clamp(4.2rem, 10.5vw, 11.5rem);
+      font-size: clamp(4.2rem, 9.5vw, 10.5rem);
       line-height: .82;
       letter-spacing: -.075em;
       font-weight: 700;
@@ -164,7 +167,10 @@
 
     .portrait-wrap {
       align-self: center;
-      padding-top: 35px;
+      width: 100%;
+      max-width: 560px;
+      justify-self: end;
+      position: relative;
     }
 
     .portrait {
@@ -172,16 +178,26 @@
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      object-position: center;
+      object-position: center 32%;
       filter: grayscale(100%);
+    }
+
+    .portrait-wrap::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -12px;
+      width: 100%;
+      height: 1px;
+      background: var(--fg);
     }
 
     .portrait-caption {
       display: flex;
       justify-content: space-between;
-      padding-top: 9px;
-      border-top: 1px solid var(--fg);
-      margin-top: 9px;
+      padding-top: 10px;
+      margin-top: 10px;
+      color: var(--muted);
     }
 
     section {
@@ -233,16 +249,21 @@
     }
 
     .toggle {
-      border-bottom: 1px solid var(--fg);
-      padding-bottom: 4px;
+      padding: 6px 8px;
       font-family: var(--mono);
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: .06em;
+      transition: all .2s ease;
     }
 
-    .toggle.active { opacity: 1; }
-    .toggle:not(.active) { opacity: .4; }
+    .toggle.active {
+      background: var(--fg);
+      color: var(--bg);
+      opacity: 1;
+    }
+
+    .toggle:not(.active) { opacity: .45; }
 
     .job {
       display: grid;
@@ -386,87 +407,87 @@
       color: var(--muted);
     }
 
-    /* Print / PDF version */
+    /* Print / PDF version — compact HR-friendly CV */
     @media print {
-      @page {
-        size: A4;
-        margin: 14mm 15mm;
-      }
+      @page { size: A4; margin: 11mm 13mm; }
 
       html, body {
         background: #fff !important;
         color: #000 !important;
-        font-size: 10pt;
+        font-size: 8.5pt;
       }
 
-      .topbar, .portrait-wrap, .experience-tools, .contact, footer,
-      .web-only, .nav { display: none !important; }
-
+      .topbar, .portrait-wrap, .experience-tools, .contact, footer, .nav { display: none !important; }
       .page { width: 100%; }
 
       .hero {
         min-height: 0;
         display: block;
-        padding: 0 0 18mm;
+        padding: 0 0 7mm;
       }
 
       .hero-title {
-        font-size: 52pt;
-        line-height: .84;
+        font-size: 34pt;
+        line-height: .82;
+        letter-spacing: -.065em;
       }
 
       .hero-meta {
-        margin-top: 12mm;
-        gap: 15mm;
+        margin-top: 7mm;
+        grid-template-columns: 1fr 1fr;
+        gap: 4mm 10mm;
       }
 
+      .label { font-size: 7pt; margin-bottom: 2px; }
+      .hero-meta p { font-size: 8.5pt; line-height: 1.3; }
+
       section {
-        padding: 10mm 0;
+        padding: 5mm 0;
         border-top: .5pt solid #aaa;
-        break-inside: avoid;
+        break-inside: auto;
       }
 
       .section-head {
-        grid-template-columns: 25mm 1fr;
-        gap: 7mm;
-        margin-bottom: 7mm;
+        grid-template-columns: 20mm 1fr;
+        gap: 5mm;
+        margin-bottom: 3mm;
       }
 
-      .section-title {
-        font-size: 22pt;
-      }
+      .section-number, .info-title, .job-date, .job-role { font-size: 7pt; }
+      .section-title { font-size: 15pt; line-height: .95; }
 
       .intro-copy {
-        grid-template-columns: 25mm 1fr;
-        gap: 7mm;
+        grid-template-columns: 20mm 1fr;
+        gap: 5mm;
       }
 
       .intro-copy p {
-        font-size: 14pt;
-        line-height: 1.12;
+        max-width: none;
+        font-size: 9pt;
+        line-height: 1.35;
+        letter-spacing: 0;
       }
 
       .job {
-        grid-template-columns: 25mm 48mm 1fr;
-        gap: 7mm;
-        padding: 5mm 0;
+        grid-template-columns: 24mm 48mm 1fr;
+        gap: 5mm;
+        padding: 3mm 0;
         break-inside: avoid;
       }
 
-      .job-company { font-size: 14pt; }
-      .job-details { font-size: 8.5pt; }
-      .job-details li { margin-bottom: 3px; }
+      .job-company { font-size: 9.5pt; }
+      .job-details { font-size: 7.5pt; line-height: 1.3; }
+      .job-details li { margin-bottom: 1px; }
+      .simple .job-details li:not(:first-child) { display: none; }
 
-      .grid-2 { gap: 0 15mm; }
-      .capability { font-size: 15pt; padding: 4mm 0; }
+      .grid-2 { gap: 0 10mm; }
+      .capability { font-size: 10pt; padding: 2.5mm 0; }
+      .info-block { padding: 2.5mm 0; break-inside: avoid; }
+      .info-main { font-size: 8pt; }
+      .info-sub { font-size: 7pt; margin-top: 2px; }
 
-      .info-block {
-        padding: 4mm 0;
-        break-inside: avoid;
-      }
-
-      .info-main { font-size: 10pt; }
-      .info-sub { font-size: 8.5pt; }
+      #capabilities, #capabilities + section { break-before: auto; }
+      .page > section:last-of-type { padding-bottom: 2mm; }
     }
 
     @media (max-width: 800px) {
@@ -480,14 +501,12 @@
 
       .hero {
         grid-template-columns: 1fr;
-        gap: 45px;
+        gap: 0;
         padding-top: 100px;
       }
 
       .portrait-wrap {
-        width: min(100%, 330px);
-        justify-self: end;
-        padding-top: 0;
+        display: none;
       }
 
       .hero-title { font-size: clamp(3.8rem, 18vw, 7rem); }
@@ -577,7 +596,7 @@
       </div>
 
       <div class="portrait-wrap">
-        <img class="portrait" src="assets/Manu%20solo%20BW.png" alt="Manuel García Sandoval" />
+        <img class="portrait" src="assets/manu-bw.png" alt="Manuel García Sandoval" />
         <div class="portrait-caption mono">
           <span data-en="Creative / Developer" data-es="Creativo / Desarrollador">Creative / Developer</span>
           <span>2026</span>
@@ -593,7 +612,7 @@
 
       <div class="intro-copy">
         <div class="label" data-en="Profile" data-es="Perfil">Profile</div>
-        <p>
+        <p data-en="Creative Designer, Art Director and Web Developer with more than 7 years of experience creating brand identities, digital interfaces and web applications. I combine strategic design, modern web development and AI-assisted workflows to build efficient, scalable digital experiences." data-es="Diseñador Creativo, Director de Arte y Desarrollador Web con más de 7 años de experiencia creando identidades de marca, interfaces digitales y aplicaciones web. Combino diseño estratégico, desarrollo web moderno y flujos de trabajo asistidos por IA para crear experiencias digitales eficientes y escalables.">
           Creative Designer, Art Director and Web Developer with more than 7 years of experience creating brand identities, digital interfaces and web applications. I combine strategic design, modern web development and AI-assisted workflows to build efficient, scalable digital experiences.
         </p>
       </div>
@@ -615,16 +634,15 @@
           <div class="job-date">Feb 2026 — Present</div>
           <div>
             <div class="job-company">Freelance</div>
-            <div class="job-role">Web Developer &amp; Creative Designer</div>
+            <div class="job-role" data-en="Web Developer &amp; Creative Designer" data-es="Desarrollador Web y Diseñador Creativo">Web Developer &amp; Creative Designer</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.</li>
-              <li>Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API.</li>
-              <li>Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch.</li>
-              <li>Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability.</li>
-              <li>Conceptualized the Batazo relaunch for Helados EFE, including art direction, campaign assets, storyboards and an interactive HTML5 Canvas baseball card generator.</li>
-              <li>Created content strategies, video scripts and social media assets for medical and retail clients.</li>
+              <li data-en="Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences." data-es="Diseño creativo y desarrollo web moderno combinando branding, Next.js, flujos de trabajo asistidos por IA y experiencias digitales.">Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.</li>
+              <li data-en="Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API." data-es="Desarrollo de Copymaster, una aplicación SaaS B2B para generación de copys utilizando Next.js, Supabase (RLS) y la API de Google AI Studio.">Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API.</li>
+              <li data-en="Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch." data-es="Desarrollo de un MVP de menús digitales multi-tenant con enrutamiento dinámico, carrito de compras y despacho de pedidos vía WhatsApp.">Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch.</li>
+              <li data-en="Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability." data-es="Desarrollo de plugins PHP personalizados y widgets de Elementor para optimización y escalabilidad de WordPress.">Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability.</li>
+              <li data-en="Created content strategies, video scripts and social media assets for medical and retail clients." data-es="Creación de estrategias de contenido, guiones de video y piezas para redes sociales para clientes de los sectores médico y retail.">Created content strategies, video scripts and social media assets for medical and retail clients.</li>
             </ul>
           </div>
         </article>
@@ -633,12 +651,12 @@
           <div class="job-date">Dec 2024 — Aug 2026</div>
           <div>
             <div class="job-company">Bom Creative Studios</div>
-            <div class="job-role">Creative Designer</div>
+            <div class="job-role" data-en="Creative Designer" data-es="Diseñador Creativo">Creative Designer</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences.</li>
-              <li>Led visual direction and production of digital pieces using AI-assisted workflows.</li>
+              <li data-en="Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences." data-es="Diseño y desarrollo de soluciones visuales estratégicas integrando identidad de marca, campañas digitales y experiencias web.">Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences.</li>
+              <li data-en="Led visual direction and production of digital pieces using AI-assisted workflows." data-es="Dirección visual y producción de piezas digitales utilizando flujos de trabajo asistidos por IA.">Led visual direction and production of digital pieces using AI-assisted workflows.</li>
             </ul>
           </div>
         </article>
@@ -647,13 +665,13 @@
           <div class="job-date">Nov 2019 — Oct 2024</div>
           <div>
             <div class="job-company">3 Agencia Creativa</div>
-            <div class="job-role">Senior Graphic Designer &amp; Team Lead</div>
+            <div class="job-role" data-en="Senior Graphic Designer &amp; Team Lead" data-es="Diseñador Gráfico Senior y Líder de Equipo">Senior Graphic Designer &amp; Team Lead</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Led the agency design team and developed visual identities and websites for national and international brands.</li>
-              <li>Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company.</li>
-              <li>Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising.</li>
+              <li data-en="Led the agency design team and developed visual identities and websites for national and international brands." data-es="Dirección del equipo de diseño de la agencia y desarrollo de identidades visuales y sitios web para marcas nacionales e internacionales.">Led the agency design team and developed visual identities and websites for national and international brands.</li>
+              <li data-en="Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company." data-es="Trabajo con marcas como Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno y Caracas Meat Company.">Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company.</li>
+              <li data-en="Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising." data-es="Creación de piezas para marcas de consumo masivo como Polar y Diageo, además de edición de video y publicidad exterior.">Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising.</li>
             </ul>
           </div>
         </article>
@@ -662,11 +680,11 @@
           <div class="job-date">Mar 2018 — Sep 2019</div>
           <div>
             <div class="job-company">YM Produce y Comunica</div>
-            <div class="job-role">Graphic Designer</div>
+            <div class="job-role" data-en="Graphic Designer" data-es="Diseñador Gráfico">Graphic Designer</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Graphic design and visual communication work.</li>
+              <li data-en="Graphic design and visual communication work." data-es="Trabajo de diseño gráfico y comunicación visual.">Graphic design and visual communication work.</li>
             </ul>
           </div>
         </article>
@@ -675,11 +693,11 @@
           <div class="job-date">Feb 2018 — Mar 2018</div>
           <div>
             <div class="job-company">Langroo</div>
-            <div class="job-role">Graphic Designer</div>
+            <div class="job-role" data-en="Graphic Designer" data-es="Diseñador Gráfico">Graphic Designer</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Graphic design work for a Madrid-based company, remotely.</li>
+              <li data-en="Graphic design work for a Madrid-based company, remotely." data-es="Trabajo de diseño gráfico para una empresa con sede en Madrid, de forma remota.">Graphic design work for a Madrid-based company, remotely.</li>
             </ul>
           </div>
         </article>
@@ -688,11 +706,11 @@
           <div class="job-date">May 2017 — Jan 2018</div>
           <div>
             <div class="job-company">Kromáticos Design</div>
-            <div class="job-role">Graphic Designer</div>
+            <div class="job-role" data-en="Graphic Designer" data-es="Diseñador Gráfico">Graphic Designer</div>
           </div>
           <div class="job-details">
             <ul>
-              <li>Graphic design and visual communication work.</li>
+              <li data-en="Graphic design and visual communication work." data-es="Trabajo de diseño gráfico y comunicación visual.">Graphic design and visual communication work.</li>
             </ul>
           </div>
         </article>
@@ -739,7 +757,7 @@
           <div class="info-block">
             <div class="info-title">Design / Multimedia</div>
             <div class="info-main">UI/UX Design, Information Architecture, Motion &amp; Video Editing</div>
-            <div class="info-sub">DaVinci Resolve / Premiere Pro / Social Media Strategy</div>
+            <div class="info-sub">Premiere Pro / Social Media Strategy</div>
           </div>
           <div class="info-block">
             <div class="info-title">Languages</div>
@@ -813,47 +831,9 @@
   </main>
 
   <script>
-
-    const translations = {
-      es: {
-        "Design, technology & ideas.": "Diseño, tecnología e ideas.",
-        "Creative Designer & Full-Stack Web Developer": "Diseñador Creativo y Desarrollador Web Full-Stack",
-        "Branding / UI/UX / Web / AI-Driven Digital Experiences": "Branding / UI/UX / Web / Experiencias Digitales impulsadas por IA",
-        "Caracas, Venezuela / Remote": "Caracas, Venezuela / Remoto",
-        "Creative / Developer": "Creativo / Desarrollador",
-        "Profile": "Perfil",
-        "Experience": "Experiencia",
-        "Capabilities": "Especialidades",
-        "Tools & knowledge": "Herramientas y conocimientos",
-        "Education & certifications": "Educación y certificaciones",
-        "Contact": "Contacto",
-        "Simple": "Simple",
-        "Detailed": "Detallado",
-        "Art Direction": "Dirección de Arte",
-        "Branding": "Branding",
-        "Web Development": "Desarrollo Web",
-        "AI & Automation": "IA y Automatización",
-        "Motion / Video": "Motion / Video",
-        "Social Media": "Redes Sociales",
-        "Digital Experiences": "Experiencias Digitales",
-        "Web / Programming": "Web / Programación",
-        "AI / Automation": "IA / Automatización",
-        "Design / Multimedia": "Diseño / Multimedia",
-        "Languages": "Idiomas",
-        "Spanish — Native": "Español — Nativo",
-        "English — Fluent / Advanced Professional (C1–B2 / Professional Working Proficiency)": "Inglés — Fluido / Profesional Avanzado (C1–B2 / Professional Working Proficiency)",
-        "Education": "Educación",
-        "Secondary Education": "Educación Secundaria",
-        "Certifications": "Certificaciones",
-        "Mail ↗": "Correo ↗",
-        "Save PDF ↗": "Guardar PDF ↗",
-        "Let's": "Hagamos",
-        "work.": "algo."
-      }
-    };
-
     function setLanguage(lang) {
       document.documentElement.lang = lang;
+
       document.querySelectorAll("[data-lang]").forEach(el => {
         el.classList.toggle("active", el.dataset.lang === lang);
       });
@@ -861,36 +841,6 @@
       document.querySelectorAll("[data-en][data-es]").forEach(el => {
         el.innerHTML = lang === "es" ? el.dataset.es : el.dataset.en;
       });
-
-      if (lang === "es") {
-        document.querySelectorAll("h2, .capability, .info-title, .info-main, .info-sub, .job-role, .job-details li, .job-company, .label").forEach(el => {
-          if (!el.dataset.originalText) el.dataset.originalText = el.textContent;
-          const value = translations.es[el.dataset.originalText.trim()];
-          if (value) el.textContent = value;
-        });
-        document.querySelectorAll(".job-details li").forEach(el => {
-          const t = el.textContent.trim();
-          const map = {
-            "Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.": "Diseño creativo y desarrollo web moderno combinando branding, Next.js, flujos de trabajo asistidos por IA y experiencias digitales.",
-            "Creative design and modern web development combining branding, Next.js, AI-assisted workflows and digital experiences.": "Diseño creativo y desarrollo web moderno combinando branding, Next.js, flujos de trabajo asistidos por IA y experiencias digitales.",
-            "Developed Copymaster, a B2B SaaS copy-generation application using Next.js, Supabase (RLS) and Google AI Studio API.": "Desarrollo de Copymaster, una aplicación SaaS B2B para generación de copys utilizando Next.js, Supabase (RLS) y la API de Google AI Studio.",
-            "Built a multi-tenant digital menu MVP with dynamic routing, shopping cart and WhatsApp order dispatch.": "Desarrollo de un MVP de menús digitales multi-tenant con enrutamiento dinámico, carrito de compras y despacho de pedidos vía WhatsApp.",
-            "Developed custom PHP plugins and Elementor widgets for WordPress optimization and scalability.": "Desarrollo de plugins PHP personalizados y widgets de Elementor para optimización y escalabilidad de WordPress.",
-            "Conceptualized the Batazo relaunch for Helados EFE, including art direction, campaign assets, storyboards and an interactive HTML5 Canvas baseball card generator.": "Conceptualización del relanzamiento de Batazo para Helados EFE, incluyendo dirección de arte, assets de campaña, storyboards y un generador interactivo de tarjetas de béisbol en HTML5 Canvas.",
-            "Created content strategies, video scripts and social media assets for medical and retail clients.": "Creación de estrategias de contenido, guiones de video y piezas para redes sociales para clientes de los sectores médico y retail.",
-            "Designed and developed strategic visual solutions integrating brand identity, digital campaigns and web experiences.": "Diseño y desarrollo de soluciones visuales estratégicas integrando identidad de marca, campañas digitales y experiencias web.",
-            "Led visual direction and production of digital pieces using AI-assisted workflows.": "Dirección visual y producción de piezas digitales utilizando flujos de trabajo asistidos por IA.",
-            "Led the agency design team and developed visual identities and websites for national and international brands.": "Dirección del equipo de diseño de la agencia y desarrollo de identidades visuales y sitios web para marcas nacionales e internacionales.",
-            "Worked with brands including Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno and Caracas Meat Company.": "Trabajo con marcas como Ayuntamiento de Madrid, Ever Insurance, Casabe Delbueno y Caracas Meat Company.",
-            "Created work for mass-consumer brands including Polar and Diageo, plus video editing and outdoor advertising.": "Creación de piezas para marcas de consumo masivo como Polar y Diageo, además de edición de video y publicidad exterior.",
-            "Graphic design and visual communication work.": "Trabajo de diseño gráfico y comunicación visual.",
-            "Graphic design work for a Madrid-based company, remotely.": "Trabajo de diseño gráfico para una empresa con sede en Madrid, de forma remota."
-          };
-          if (map[t]) el.textContent = map[t];
-        });
-      } else {
-        location.reload();
-      }
     }
 
     document.getElementById("language-switch").addEventListener("click", () => {
@@ -903,7 +853,7 @@
 
     toggles.forEach(toggle => {
       toggle.addEventListener("click", () => {
-        toggles.forEach(t => t.classList.remove("active"));
+        toggles.forEach(item => item.classList.remove("active"));
         toggle.classList.add("active");
         list.classList.toggle("simple", toggle.dataset.mode === "simple");
       });
