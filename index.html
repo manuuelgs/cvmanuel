@@ -512,18 +512,13 @@
     }
 
     @media (max-width: 800px) {
-      .page, .topbar { width: min(calc(100% - 28px), var(--max)); }
-
-      .topbar {
-        top: 13px;
-        align-items: flex-start; /* Evita que el menú baje al empujar el switch */
-      }
+      /* ... (otras reglas) ... */
 
       .language-switch {
-        position: relative; /* Devuelve el switch al flujo normal */
-        left: 0;
-        transform: none;
-        margin-top: 4px; /* Pequeña separación del título */
+        left: 0;           /* Lo alinea a la izquierda como el título */
+        top: 22px;         /* Lo empuja hacia abajo, debajo de MGS / CV */
+        transform: none;   /* Anula el centrado de la versión de escritorio */
+      
       }
 
       .topbar .nav {
@@ -593,13 +588,16 @@
 
 <body>
   <header class="topbar">
-    <div class="topbar-brand">
-      <a href="#top" class="mono">MGS / CV</a>
-      <button class="language-switch mono" id="language-switch" aria-label="Change language">
-        <span class="lang active" data-lang="en">EN</span><span class="lang-separator"> / </span><span class="lang" data-lang="es">ES</span>
-      </button>
-    </div>
+    <a href="#top" class="mono">MGS / CV</a>
+    <button class="language-switch mono" id="language-switch" aria-label="Change language">
+      <span class="lang active" data-lang="en">EN</span><span class="lang-separator"> / </span><span class="lang" data-lang="es">ES</span>
+    </button>
     <nav class="nav">
+      <a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a>
+      <a href="#capabilities" data-en="Capabilities" data-es="Especialidades">Capabilities</a>
+      <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
+      <button class="save-pdf" id="save-pdf-top" data-en="Save PDF" data-es="Guardar PDF">Save PDF</button>
+    </nav>
   </header>
 
   <main id="top" class="page">
