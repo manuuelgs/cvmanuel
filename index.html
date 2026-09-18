@@ -91,8 +91,16 @@
       opacity: .3;
     }
 
+    .topbar-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      pointer-events: auto; /* Mantiene los clics activos */
+    }
+
     .nav {
       display: flex;
+      align-items: center; /* <--- Esta línea centra tu botón SAVE PDF */
       gap: 22px;
     }
 
@@ -579,16 +587,13 @@
 
 <body>
   <header class="topbar">
-    <a href="#top" class="mono">MGS / CV</a>
-    <button class="language-switch mono" id="language-switch" aria-label="Change language">
-      <span class="lang active" data-lang="en">EN</span><span class="lang-separator"> / </span><span class="lang" data-lang="es">ES</span>
-    </button>
+    <div class="topbar-brand">
+      <a href="#top" class="mono">MGS / CV</a>
+      <button class="language-switch mono" id="language-switch" aria-label="Change language">
+        <span class="lang active" data-lang="en">EN</span><span class="lang-separator"> / </span><span class="lang" data-lang="es">ES</span>
+      </button>
+    </div>
     <nav class="nav">
-      <a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a>
-      <a href="#capabilities" data-en="Capabilities" data-es="Especialidades">Capabilities</a>
-      <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
-      <button class="save-pdf" id="save-pdf-top" data-en="Save PDF" data-es="Guardar PDF">Save PDF</button>
-    </nav>
   </header>
 
   <main id="top" class="page">
