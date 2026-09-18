@@ -104,6 +104,19 @@
       text-transform: uppercase;
     }
 
+    .save-pdf {
+      background: var(--fg) !important;
+      color: var(--bg) !important;
+      padding: 7px 10px !important;
+      margin-left: 2px;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .save-pdf:hover {
+      opacity: .78;
+      transform: translateY(-1px);
+    }
+
     .nav a::after, .nav button::after {
       content: "";
       position: absolute;
@@ -497,6 +510,14 @@
         top: 13px;
       }
 
+      .language-switch {
+        left: 38%;
+      }
+
+      .topbar .nav {
+        gap: 14px;
+      }
+
       .topbar .nav a:nth-child(3) { display: none; }
 
       .hero {
@@ -548,6 +569,10 @@
       }
 
       .contact-title { font-size: clamp(4rem, 19vw, 8rem); }
+
+      .nav .save-pdf {
+        padding: 6px 8px !important;
+      }
     }
   </style>
 </head>
@@ -562,7 +587,7 @@
       <a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a>
       <a href="#capabilities" data-en="Capabilities" data-es="Especialidades">Capabilities</a>
       <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
-      <button onclick="window.print()" data-en="Save PDF" data-es="Guardar PDF">Save PDF</button>
+      <button class="save-pdf" id="save-pdf-top" data-en="Save PDF" data-es="Guardar PDF">Save PDF</button>
     </nav>
   </header>
 
@@ -820,7 +845,7 @@
         <a class="contact-link" href="mailto:manugarcia50@gmail.com" data-en="Mail ↗" data-es="Correo ↗">Mail ↗</a>
         <a class="contact-link" href="https://wa.me/584226254574" target="_blank" rel="noopener">WhatsApp ↗</a>
         <a class="contact-link" href="https://www.linkedin.com/in/manuuelgs/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <button class="contact-link" onclick="window.print()" data-en="Save PDF ↗" data-es="Guardar PDF ↗">Save PDF ↗</button>
+        <button class="contact-link save-pdf" id="save-pdf-bottom" data-en="Save PDF ↗" data-es="Guardar PDF ↗">Save PDF ↗</button>
       </div>
     </section>
 
@@ -847,6 +872,20 @@
       const next = document.documentElement.lang === "en" ? "es" : "en";
       setLanguage(next);
     });
+
+    function downloadPDF() {
+      const lang = document.documentElement.lang || "en";
+      const file = lang === "es" ? "assets/cv-es.pdf" : "assets/resume-en.pdf";
+      const link = document.createElement("a");
+      link.href = file;
+      link.download = lang === "es" ? "Manuel-Garcia-Sandoval-CV.pdf" : "Manuel-Garcia-Sandoval-Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    document.getElementById("save-pdf-top").addEventListener("click", downloadPDF);
+    document.getElementById("save-pdf-bottom").addEventListener("click", downloadPDF);
 
     const list = document.getElementById("experience-list");
     const toggles = document.querySelectorAll(".toggle");
